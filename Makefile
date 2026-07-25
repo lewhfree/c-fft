@@ -3,12 +3,6 @@ export KFVER_MINOR = 1
 export KFVER_PATCH = 0
 
 #
-# Data type (float / int16_t / int32_t)
-#
-
-export KISSFFT_DATATYPE ?= float
-
-#
 # Default options
 #
 
@@ -67,8 +61,8 @@ export INSTALL ?= install
 # Library name and version
 #
 
-KISSFFTLIB_SHORTNAME = kissfft-$(KISSFFT_DATATYPE)
-KISSFFT_PKGCONFIG = kissfft-$(KISSFFT_DATATYPE).pc
+KISSFFTLIB_SHORTNAME = kissfft-float
+KISSFFT_PKGCONFIG = kissfft-float.pc
 TYPEFLAGS =
 PKGCONFIG_OPENMP =
 
@@ -97,17 +91,7 @@ export HAVE_LASX
 # C symbol visibility.
 #
 
-ifeq "$(KISSFFT_DATATYPE)" "int32_t"
-	TYPEFLAGS += -DFIXED_POINT=32
-else ifeq "$(KISSFFT_DATATYPE)" "int16_t"
-	TYPEFLAGS += -DFIXED_POINT=16
-else ifeq "$(KISSFFT_DATATYPE)" "float"
-	TYPEFLAGS += -Dkiss_fft_scalar=$(KISSFFT_DATATYPE)
-else ifeq "$(KISSFFT_DATATYPE)" "double"
-	TYPEFLAGS += -Dkiss_fft_scalar=$(KISSFFT_DATATYPE)
-else
-	$(error ERROR: KISSFFT_DATATYPE must be one of: float double int16_t int32_t)
-endif
+TYPEFLAGS += -Dkiss_fft_scalar=float
 
 ifneq ($(KISSFFT_STATIC), 1)
 	TYPEFLAGS += -DKISS_FFT_SHARED
