@@ -13,10 +13,6 @@
 #include "kiss_fftr.h"
 #include "kiss_fftnd.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-    
 typedef struct kiss_fftndr_state *kiss_fftndr_cfg;
 
 
@@ -47,9 +43,5 @@ void KISS_FFT_API kiss_fftndri(
 
 
 #define kiss_fftndr_free free
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

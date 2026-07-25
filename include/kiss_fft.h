@@ -10,8 +10,9 @@
 #define KISS_FFT_H
 
 #include <stdlib.h>
-#include <stdio.h>
+// #include <stdio.h>
 #include <string.h>
+#include <math.h>
 
 // Define KISS_FFT_SHARED macro to properly export symbols
 #ifdef KISS_FFT_SHARED

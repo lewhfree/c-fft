@@ -10,10 +10,6 @@
 #define KISS_FTR_H
 
 #include "kiss_fft.h"
-#ifdef __cplusplus
-extern "C" {
-#endif
-
     
 /* 
  
@@ -47,8 +43,4 @@ void KISS_FFT_API kiss_fftri(kiss_fftr_cfg cfg,const kiss_fft_cpx *freqdata,kiss
 */
 
 #define kiss_fftr_free KISS_FFT_FREE
-
-#ifdef __cplusplus
-}
-#endif
 #endif
