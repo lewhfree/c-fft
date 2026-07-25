@@ -11,7 +11,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
 #include <string.h>
 
 // Define KISS_FFT_SHARED macro to properly export symbols
@@ -26,11 +25,7 @@
 #  define KISS_FFT_API __attribute__ ((visibility ("default")))
 # endif
 #else
-# define KISS_FFT_API
-#endif
-
-#ifdef __cplusplus
-extern "C" {
+# define KISS_FFT_API __attribute__ ((visibility ("default")))
 #endif
 
 /*
@@ -176,9 +171,5 @@ int KISS_FFT_API kiss_fft_next_fast_size(int n);
 /* for real ffts, we need an even size */
 #define kiss_fftr_next_fast_size_real(n) \
         (kiss_fft_next_fast_size( ((n)+1)>>1)<<1)
-
-#ifdef __cplusplus
-} 
-#endif
 
 #endif
