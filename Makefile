@@ -6,8 +6,9 @@ BUILD_DIR = build
 INCLUDE_DIR = include
 
 CFLAGS = -Wall -Wextra -Wpedantic \
+			-Wunused-function -Wunreachable-code \
 			-fcolor-diagnostics -fdiagnostics-color=always \
-			-O3 -g0 -I$(INCLUDE_DIR)/
+			-O2 -g0 -I$(INCLUDE_DIR)/
 
 TYPEFLAGS = -Dkiss_fft_scalar=float
 
@@ -28,7 +29,7 @@ $(BUILD_DIR)/%.c.o: $(SRC_DIR)/%.c
 		$(CFLAGS) $(TYPEFLAGS) -DKISS_FFT_BUILD \
 		-c $<
 
-all: $(BUILD_DIR)/kfc.c.o $(BUILD_DIR)/kiss_fft.c.o $(BUILD_DIR)/kiss_fftnd.c.o $(BUILD_DIR)/kiss_fftndr.c.o $(BUILD_DIR)/kiss_fftr.c.o
+all: $(BUILD_DIR)/kiss_fft.c.o $(BUILD_DIR)/kiss_fftr.c.o
 ifneq ($(KISSFFT_STATIC), 1)
 	$(CC) $(KISSFFTLIB_FLAGS) -o $(KISSFFTLIB_NAME) $^
 else

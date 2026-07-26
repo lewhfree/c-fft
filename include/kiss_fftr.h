@@ -12,11 +12,7 @@
 #include "kiss_fft.h"
     
 /* 
- 
  Real optimized version can save about 45% cpu time vs. complex fft of a real seq.
-
- 
- 
  */
 
 typedef struct kiss_fftr_state *kiss_fftr_cfg;
@@ -35,12 +31,5 @@ void KISS_FFT_API kiss_fftr(kiss_fftr_cfg cfg,const kiss_fft_scalar *timedata,ki
  input timedata has nfft scalar points
  output freqdata has nfft/2+1 complex points
 */
-
-void KISS_FFT_API kiss_fftri(kiss_fftr_cfg cfg,const kiss_fft_cpx *freqdata,kiss_fft_scalar *timedata);
-/*
- input freqdata has  nfft/2+1 complex points
- output timedata has nfft scalar points
-*/
-
 #define kiss_fftr_free KISS_FFT_FREE
 #endif

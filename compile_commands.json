@@ -1,29 +1,5 @@
 [
   {
-    "file": "src/kfc.c",
-    "arguments": [
-      "/usr/bin/zig",
-      "cc",
-      "-o",
-      "build/kfc.c.o",
-      "-Wall",
-      "-Wextra",
-      "-Wpedantic",
-      "-fcolor-diagnostics",
-      "-fdiagnostics-color=always",
-      "-O3",
-      "-g0",
-      "-Iinclude/",
-      "-Dkiss_fft_scalar=float",
-      "-DKISS_FFT_SHARED",
-      "-DKISS_FFT_BUILD",
-      "-c",
-      "src/kfc.c"
-    ],
-    "directory": "/home/lewhfree/Projects/libretune/c-fft",
-    "output": "build/kfc.c.o"
-  },
-  {
     "file": "src/kiss_fft.c",
     "arguments": [
       "/usr/bin/zig",
@@ -46,54 +22,6 @@
     ],
     "directory": "/home/lewhfree/Projects/libretune/c-fft",
     "output": "build/kiss_fft.c.o"
-  },
-  {
-    "file": "src/kiss_fftnd.c",
-    "arguments": [
-      "/usr/bin/zig",
-      "cc",
-      "-o",
-      "build/kiss_fftnd.c.o",
-      "-Wall",
-      "-Wextra",
-      "-Wpedantic",
-      "-fcolor-diagnostics",
-      "-fdiagnostics-color=always",
-      "-O3",
-      "-g0",
-      "-Iinclude/",
-      "-Dkiss_fft_scalar=float",
-      "-DKISS_FFT_SHARED",
-      "-DKISS_FFT_BUILD",
-      "-c",
-      "src/kiss_fftnd.c"
-    ],
-    "directory": "/home/lewhfree/Projects/libretune/c-fft",
-    "output": "build/kiss_fftnd.c.o"
-  },
-  {
-    "file": "src/kiss_fftndr.c",
-    "arguments": [
-      "/usr/bin/zig",
-      "cc",
-      "-o",
-      "build/kiss_fftndr.c.o",
-      "-Wall",
-      "-Wextra",
-      "-Wpedantic",
-      "-fcolor-diagnostics",
-      "-fdiagnostics-color=always",
-      "-O3",
-      "-g0",
-      "-Iinclude/",
-      "-Dkiss_fft_scalar=float",
-      "-DKISS_FFT_SHARED",
-      "-DKISS_FFT_BUILD",
-      "-c",
-      "src/kiss_fftndr.c"
-    ],
-    "directory": "/home/lewhfree/Projects/libretune/c-fft",
-    "output": "build/kiss_fftndr.c.o"
   },
   {
     "file": "src/kiss_fftr.c",

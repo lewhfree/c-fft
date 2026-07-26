@@ -27,7 +27,7 @@ kiss_fftr_cfg kiss_fftr_alloc(int nfft,int inverse_fft,void * mem,size_t * lenme
     size_t subsize = 0, memneeded;
 
     if (nfft & 1) {
-        KISS_FFT_ERROR("Real FFT optimization must be even.");
+        // KISS_FFT_ERROR("Real FFT optimization must be even.");
         return NULL;
     }
     nfft >>= 1;
@@ -67,7 +67,7 @@ void kiss_fftr(kiss_fftr_cfg st,const kiss_fft_scalar *timedata,kiss_fft_cpx *fr
     kiss_fft_cpx fpnk,fpk,f1k,f2k,tw,tdc;
 
     if ( st->substate->inverse) {
-        KISS_FFT_ERROR("kiss fft usage error: improper alloc");
+        // KISS_FFT_ERROR("kiss fft usage error: improper alloc");
         return;/* The caller did not call the correct function */
     }
 
@@ -122,50 +122,4 @@ void kiss_fftr(kiss_fftr_cfg st,const kiss_fft_scalar *timedata,kiss_fft_cpx *fr
         freqdata[ncfft-k].r = HALF_OF(f1k.r - tw.r);
         freqdata[ncfft-k].i = HALF_OF(tw.i - f1k.i);
     }
-}
-
-void kiss_fftri(kiss_fftr_cfg st,const kiss_fft_cpx *freqdata,kiss_fft_scalar *timedata)
-{
-    /* input buffer timedata is stored row-wise */
-    int k, ncfft;
-
-    if (st->substate->inverse == 0) {
-        KISS_FFT_ERROR("kiss fft usage error: improper alloc");
-        return;/* The caller did not call the correct function */
-    }
-
-    ncfft = st->substate->nfft;
-
-    st->tmpbuf[0].r = freqdata[0].r + freqdata[ncfft].r;
-    st->tmpbuf[0].i = freqdata[0].r - freqdata[ncfft].r;
-    C_FIXDIV(st->tmpbuf[0],2);
-
-    for (k = 1; k <= ncfft / 2; ++k) {
-        kiss_fft_cpx fk, fnkc, fek, fok, tmp;
-        fk = freqdata[k];
-        fnkc.r = freqdata[ncfft - k].r;
-        fnkc.i = -freqdata[ncfft - k].i;
-        C_FIXDIV( fk , 2 );
-        C_FIXDIV( fnkc , 2 );
-
-        C_ADD (fek, fk, fnkc);
-        C_SUB (tmp, fk, fnkc);
-        C_MUL (fok, tmp, st->super_twiddles[k-1]);
-        C_ADD (st->tmpbuf[k],     fek, fok);
-        C_SUB (st->tmpbuf[ncfft - k], fek, fok);
-#ifdef USE_SIMD
-#ifdef HAVE_LASX
-        __m256 neg_one = (__m256)__lasx_xvreplgr2vr_w(0xBF800000); // -1.0f
-        st->tmpbuf[ncfft - k].i = __lasx_xvfmul_s(st->tmpbuf[ncfft - k].i, neg_one);
-#elif defined(HAVE_LSX)
-        __m128 neg_one = (__m128)__lsx_vreplgr2vr_w(0xBF800000); // -1.0f
-        st->tmpbuf[ncfft - k].i = __lsx_vfmul_s(st->tmpbuf[ncfft - k].i, neg_one);
-#else
-        st->tmpbuf[ncfft - k].i *= _mm_set1_ps(-1.0);
-#endif
-#else
-        st->tmpbuf[ncfft - k].i *= -1;
-#endif
-    }
-    kiss_fft (st->substate, st->tmpbuf, (kiss_fft_cpx *) timedata);
 }

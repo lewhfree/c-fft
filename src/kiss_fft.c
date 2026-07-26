@@ -204,7 +204,7 @@ static void kf_bfly_generic(
 
     kiss_fft_cpx * scratch = (kiss_fft_cpx*)KISS_FFT_TMP_ALLOC(sizeof(kiss_fft_cpx)*p);
     if (scratch == NULL){
-        KISS_FFT_ERROR("Memory allocation failed.");
+        // KISS_FFT_ERROR("Memory allocation failed.");
         return;
     }
 
@@ -340,7 +340,7 @@ kiss_fft_cfg kiss_fft_alloc(int nfft,int inverse_fft,void * mem,size_t * lenmem 
 
     kiss_fft_cfg st=NULL;
     // check for overflow condition {memneeded > SIZE_MAX}.
-    if (nfft >= (SIZE_MAX - 2*sizeof(struct kiss_fft_state))/sizeof(kiss_fft_cpx))
+    if ((unsigned long)nfft >= (SIZE_MAX - 2*sizeof(struct kiss_fft_state))/sizeof(kiss_fft_cpx))
         return NULL;
 
     size_t memneeded = KISS_FFT_ALIGN_SIZE_UP(sizeof(struct kiss_fft_state)
@@ -378,13 +378,13 @@ void kiss_fft_stride(kiss_fft_cfg st,const kiss_fft_cpx *fin,kiss_fft_cpx *fout,
         //NOTE: this is not really an in-place FFT algorithm.
         //It just performs an out-of-place FFT into a temp buffer
         if (fout == NULL){
-            KISS_FFT_ERROR("fout buffer NULL.");
+            // KISS_FFT_ERROR("fout buffer NULL.");
         return;
         }
 
         kiss_fft_cpx * tmpbuf = (kiss_fft_cpx*)KISS_FFT_TMP_ALLOC( sizeof(kiss_fft_cpx)*st->nfft);
         if (tmpbuf == NULL){
-            KISS_FFT_ERROR("Memory allocation error.");
+            // KISS_FFT_ERROR("Memory allocation error.");
         return;
         }
 
