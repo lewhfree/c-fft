@@ -1,0 +1,6 @@
+[x] decode codecs, mono, resample
+	- [ ] Pass config vars (final sr, hop len, etc) into decoder (uses a define right now).
+[ ] stft abstraction
+	- [ ] (Later) seperate stft from code to build a general purpose c stft lightweight library
+[ ] spectrogram seaches
+[ ] hashing and encoding
