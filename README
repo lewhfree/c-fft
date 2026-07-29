@@ -1,4 +1,52 @@
-simple fft in c, stripped from kissfft
+----- C library for audio fingerprinting tools -----
 
-need zig installed
-for use with all music recognition ports
+A library built to be portable to all modern platforms. Minimal libc dependencies, small enough that you could vendor in the musl implementation and have a dependency-less binary. Speed is not the main focus. Only supports FLAC, WAV, and MP3 audio for now.
+
+--- Stack ---
+
+Native code (JS in browser, Java on Android, etc) loads the binary and uses native implementations of microphone, network, other io.
+The library just handles returning the exact same information on every platform
+See lewhfree/music-recognition-web for an example of this.
+
+--- Dependencies ---
+
+A C compiler
+	- The project defaults to zig cc for it's cross platform support. But you can swap out the compiler for pretty much any one just by changing CC and AR at the top of the makefile. An example of clang is at the top of the makefile.
+
+--- Docs ---
+
+src/decode.c contains the interface for speex and dr_libs and decodes to 8khz (should be changeable) floats. the audio struct has the float* and a count and sample rate. All decode_* return the audio struct.
+
+--- Vendored Libraries ---
+
+For decoding audio formats (wav, mp3, flac right now):
+dr_libs is at 34a89ffe6bfc4d78db6888fef76cd408dba18185
+	-include/dr*.h
+
+For audio resampling to constant bitrates for ingestion:
+speex_dsp is at 62c58006bc2c9a57ec410a5ab9c323bd0e2eb104
+	-include/arch.h
+	-include/os_support.h
+	-include/speexdsp_types.h
+	-include/speex_resampler.h
+	-include/fixed_generic.h
+	-src/resample.c
+
+For the stft backend:
+kissfft is at 6398d8a1d0c92486b5ece8a456fd5e6a97ad1f08
+	-include/_kiss_fft_guts.h
+	-include/kiss_fft.h
+	-include/kiss_fftr.h
+	-src/kiss_fft.c
+	-src/kiss_fftr.c
+
+For hashing (heavy depend for a simple algo, speed isn't the most important for this. Any 64 bit hash would do (Even other bit lengths with some backend changes.)):
+xxhash is at c0b5ea995d66691734b1a79ad89e73a0d2fd5a53
+	-include/xxhash.h
+	-src/xxhash.c
+
+--- Licenses ---
+
+Licenses for each used library are in licenses/ under COPYING-$(LIBNAME)
+
+License for this project is in ./LICENSE (Unlicense)
