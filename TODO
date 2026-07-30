@@ -4,3 +4,6 @@
 	- [ ] (Later) seperate stft from code to build a general purpose c stft lightweight library
 [ ] spectrogram seaches
 [ ] hashing and encoding
+[ ] Finish depend vendoring
+	- [ ] Cleanup code behind defines like NOSTDIO
+	- [ ] Delete unneeded functions

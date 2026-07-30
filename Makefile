@@ -22,7 +22,6 @@ CFLAGS = -Wall -Wextra -Wpedantic \
 			-DDR_FLAC_NO_STDIO -DDR_FLAC_NO_SIMD \
 			-DXXH_NO_STDLIB -DXXH_NO_XXH3
 
-
 TYPEFLAGS = -Dkiss_fft_scalar=float
 
 KISSFFT_STATIC ?= 0
@@ -37,6 +36,7 @@ else
 endif
 
 $(BUILD_DIR)/%.c.o: $(SRC_DIR)/%.c
+	mkdir -p $(BUILD_DIR)
 	$(CC) \
 		-o $@ \
 		$(CFLAGS) $(TYPEFLAGS) -DKISS_FFT_BUILD \
@@ -50,4 +50,4 @@ else
 endif
 
 clean:
-	rm -f $(BUILD_DIR)/*.o *.a *.so *.so.*
+	rm -rf $(BUILD_DIR) *.a *.so *.so.*
