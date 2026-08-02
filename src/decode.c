@@ -2,8 +2,8 @@
 #include "dr_flac.h"
 #include "dr_wav.h"
 #include "dr_mp3.h"
-#include "xxhash.h"
 #include "speex_resampler.h"
+#include "xxh64.h"
 // #include "real.h"
 // #include "kiss_fftr.h"
 
