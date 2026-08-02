@@ -7,9 +7,9 @@
  */
 
 /* kiss_fft.h
-   defines kiss_fft_scalar as either short or a float type
+   defines float as either short or a float type
    and defines
-   typedef struct { kiss_fft_scalar r; kiss_fft_scalar i; }kiss_fft_cpx; */
+   typedef struct { float r; float i; }kiss_fft_cpx; */
 
 #ifndef _kiss_fft_guts_h
 #define _kiss_fft_guts_h
@@ -63,7 +63,7 @@ struct kiss_fft_state {
 #endif
 
 #define smul(a, b) ((SAMPPROD)(a) * (b))
-#define sround(x) (kiss_fft_scalar)(((x) + (1 << (FRACBITS - 1))) >> FRACBITS)
+#define sround(x) (float)(((x) + (1 << (FRACBITS - 1))) >> FRACBITS)
 
 #define S_MUL(a, b) sround(smul(a, b))
 
@@ -172,9 +172,9 @@ struct kiss_fft_state {
 #define HALF_OF(x) ((x) * _mm_set1_ps(.5))
 #endif
 #else
-#define KISS_FFT_COS(phase) (kiss_fft_scalar) cos(phase)
-#define KISS_FFT_SIN(phase) (kiss_fft_scalar) sin(phase)
-#define HALF_OF(x) ((x) * ((kiss_fft_scalar).5))
+#define KISS_FFT_COS(phase) (float) cos(phase)
+#define KISS_FFT_SIN(phase) (float) sin(phase)
+#define HALF_OF(x) ((x) * ((float).5))
 #endif
 
 #define kf_cexp(x, phase)                                                      \
