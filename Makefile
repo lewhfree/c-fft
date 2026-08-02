@@ -22,8 +22,6 @@ CFLAGS = -Wall -Wextra -Wpedantic \
 			-DDR_FLAC_NO_STDIO -DDR_FLAC_NO_SIMD \
 			-DXXH_NO_STDLIB -DXXH_NO_XXH3
 
-TYPEFLAGS = -Dkiss_fft_scalar=float
-
 KISSFFT_STATIC ?= 0
 
 ifeq ($(KISSFFT_STATIC), 1)
@@ -32,7 +30,7 @@ ifeq ($(KISSFFT_STATIC), 1)
 else
 	KISSFFTLIB_NAME = libkissfft-float.so
 	KISSFFTLIB_FLAGS += -shared -Wl,-soname,libkissfft-float.so
-	TYPEFLAGS += -DKISS_FFT_SHARED
+	CFLAGS += -DKISS_FFT_SHARED
 endif
 
 $(BUILD_DIR)/%.c.o: $(SRC_DIR)/%.c
@@ -42,7 +40,7 @@ $(BUILD_DIR)/%.c.o: $(SRC_DIR)/%.c
 		$(CFLAGS) $(TYPEFLAGS) -DKISS_FFT_BUILD \
 		-c $<
 
-all: $(BUILD_DIR)/kiss_fft.c.o $(BUILD_DIR)/kiss_fftr.c.o $(BUILD_DIR)/real.c.o $(BUILD_DIR)/dr_flac.c.o $(BUILD_DIR)/dr_mp3.c.o $(BUILD_DIR)/dr_wav.c.o $(BUILD_DIR)/resample.c.o $(BUILD_DIR)/xxhash.c.o $(BUILD_DIR)/decode.c.o
+all: $(BUILD_DIR)/kiss_fft.c.o $(BUILD_DIR)/kiss_fftr.c.o $(BUILD_DIR)/real.c.o $(BUILD_DIR)/dr_flac.c.o $(BUILD_DIR)/dr_mp3.c.o $(BUILD_DIR)/dr_wav.c.o $(BUILD_DIR)/resample.c.o $(BUILD_DIR)/decode.c.o
 ifneq ($(KISSFFT_STATIC), 1)
 	$(CC) $(KISSFFTLIB_FLAGS) -o $(KISSFFTLIB_NAME) $^
 else
